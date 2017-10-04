@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- TRANSPARÊNCIAS
+    100% — FF
+    95% — F2
+    90% — E6
+    85% — D9
+    80% — CC
+    75% — BF
+    70% — B3
+    65% — A6
+    60% — 99
+    55% — 8C
+    50% — 80
+    45% — 73
+    40% — 66
+    35% — 59
+    30% — 4D
+    25% — 40
+    20% — 33
+    15% — 26
+    10% — 1A
+    5% — 0D
+    0% — 00
+    -->
+
+    <item name="preto" type="color">#000000</item>
+    <item name="azul" type="color">#0000FF</item>
+    <item name="verde" type="color">#008000</item>
+    <item name="branco" type="color">#ffffff</item>
+    <item name="vermelho" type="color">#FF0000</item>
+    <item name="amarelo" type="color">#FFFF00</item>
+    <item name="cinza" type="color">#E1E1E1</item>
+    <item name="vermelho4D" type="color">#4DFF0000</item>
+
+    <!--Gerais-->
+    <item name="actionBar_text" type="color">#fff</item>
+    <item name="botao_sombra" type="color">#D8000000</item>
+    <item name="actionBar" type="color">#125175</item>
+    <item name="notificationBar" type="color">#0d405d</item>
+    <color name="accent_color">#009688</color>
+    <color name="accent_color_claro">#00c9b6</color>
+    <item name="editText_color" type="color">#125175</item>
+    <item name="bg_branco" type="color">#ffffff</item>
+    <item name="bg_claro" type="color">#ccc</item>
+    <item name="linha_clara" type="color">#cacaca</item>
+    <item name="linha_clara_plus" type="color">#d5d5d5</item>
+    <item name="indicador_tabselecionada" type="color">#167ca4</item>
+    <color name="window_background">#FFF5F5F5</color>
+    <color name="image_overlay">#60000000</color>
+    <color name="menu_dropdown_panel">#ffffff</color>
+    <color name="verde_escuro">#009688</color>
+    <item name="textos" type="color">#333333</item>
+    <item name="input_hint_color" type="color">#9c9c9c</item>
+    <item name="input_text_color" type="color">#125175</item>
+
+    <color name="submenu_color">#1666</color>
+    <!--Material pallete -->
+    <color name="MATERIAL_RED">#F44336</color>
+    <color name="MATERIAL_PINK">#E91E63</color>
+    <color name="MATERIAL_PURPLE">#9C27B0</color>
+    <color name="MATERIAL_DEEP_PURPLE">#673AB7</color>
+    <color name="MATERIAL_INDIGO">#3F51B5</color>
+    <color name="MATERIAL_BLUE">#2196F3</color>
+    <color name="MATERIAL_LIGHT_BLUE">#03A9F4</color>
+    <color name="MATERIAL_CYAN">#00BCD4</color>
+    <color name="MATERIAL_TEAL">#009688</color>
+    <color name="MATERIAL_GREEN">#4CAF50</color>
+    <color name="MATERIAL_LIGHT_GREEN">#8BC34A</color>
+    <color name="MATERIAL_LIME">#CDDC39</color>
+    <color name="MATERIAL_YELLOW">#FFEB3B</color>
+    <color name="MATERIAL_AMBER">#FFC107</color>
+    <color name="MATERIAL_ORANGE">#FF9800</color>
+    <color name="MATERIAL_DEEP_ORANGE">#FF5722</color>
+    <color name="MATERIAL_BROWN">#795548</color>
+    <color name="MATERIAL_GREY">#9E9E9E</color>
+    <color name="MATERIAL_BLUE_GREY">#607D8B</color>
+</resources>
