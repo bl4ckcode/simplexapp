@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_restricao);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         assert toolbar != null;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         listViewVarDecioes.setRecyclerListener(scrollFocusListener);
 
         variaveisDecisao.add(new VariavelDecisao(0.0, 0));
-        listViewVarDecioes.setAdapter(new VarDecisaoAdapter(this, R.layout.adapter_decisao, variaveisDecisao));
+        listViewVarDecioes.setAdapter(new VarDecisaoAdapter(this, R.layout.adapter_var_decisao, variaveisDecisao));
 
         RelativeLayout rlBotaoRestricao = (RelativeLayout) findViewById(R.id.rl_button_restricoes);
         rlBotaoRestricao.setOnClickListener(new View.OnClickListener() {

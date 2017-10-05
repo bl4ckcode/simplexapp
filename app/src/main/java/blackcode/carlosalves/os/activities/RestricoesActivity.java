@@ -1,9 +1,9 @@
 package blackcode.carlosalves.os.activities;
 
-import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -43,6 +43,8 @@ public class RestricoesActivity extends AppCompatActivity {
         restricoes.add(new Restricao(0, tamanho, SINAL.MAIOR_IGUAL.getId(), 0.0));
 
         RecyclerView recViewRestricoes = (RecyclerView) findViewById(R.id.recView_restricoes);
+        LinearLayoutManager linearManager = new LinearLayoutManager(this);
+        recViewRestricoes.setLayoutManager(linearManager);
         recViewRestricoes.setAdapter(new RestricoesAdapter(this, restricoes, tamanho));
 
         RelativeLayout rlButtonCalcSimplex = (RelativeLayout) findViewById(R.id.rl_button_calcular_simplex);

@@ -46,7 +46,7 @@ public class VarDecisaoAdapter extends ArrayAdapter<VarDecisaoAdapter.MainAdapte
         if(convertView == null) {
             holder = new MainAdapterViewholder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.adapter_decisao, parent, false);
+            convertView = inflater.inflate(R.layout.adapter_var_decisao, parent, false);
 
             holder.txtViewVarDecisao = convertView.findViewById(R.id.txtView_variavel);
             holder.edtTxtVarDecisao = convertView.findViewById(R.id.edt_restricao);

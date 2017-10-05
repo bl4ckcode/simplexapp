@@ -4,6 +4,8 @@
     <string name="simplex_app">Simplex App</string>
     <string name="restricoes">Restrições</string>
     <string name="restricao">Restrição:</string>
+    <string name="sinal_menor_igual">&lt;=</string>
+    <string name="sinal_maior_igual">&gt;=</string>
     <string name="calcular_simplex">Calcular simplex</string>
     <string name="max_z">MAX Z</string>
     <string name="min_z">MIN Z</string>
