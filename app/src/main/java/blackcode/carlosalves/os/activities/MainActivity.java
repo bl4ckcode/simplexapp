@@ -1,15 +1,15 @@
 package blackcode.carlosalves.os.activities;
 
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         final RadioGroup radioGroup_max_min = (RadioGroup) findViewById(R.id.radioGroup_max_min);
         ListView listViewVarDecioes = (ListView) findViewById(R.id.listView_variveis_decisao);
-        listViewVarDecioes.setRecyclerListener(scrollFocusListener);
 
         variaveisDecisao.add(new VariavelDecisao(0.0, 0));
         listViewVarDecioes.setAdapter(new VarDecisaoAdapter(this, R.layout.adapter_var_decisao, variaveisDecisao));
@@ -62,20 +61,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        requestPermissions();
     }
 
-    AbsListView.RecyclerListener scrollFocusListener = new AbsListView.RecyclerListener() {
-        @Override
-        public void onMovedToScrapHeap(View view) {
-            if (view.hasFocus()) {
-                view.clearFocus();
-
-                if (view instanceof EditText) {
-                    InputMethodManager imm = (InputMethodManager)
-                            view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-            }
+    private void requestPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 0);
         }
-    };
+    }
 }

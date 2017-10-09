@@ -106,4 +106,8 @@ public class RestricoesAdapter extends RecyclerView.Adapter<RestricoesAdapter.Re
     public void passValues(int index, ArrayList<Double> variaveis) {
         restricoes.get(index).setVariaveis(variaveis);
     }
+
+    public ArrayList<Restricao> getRestricoes() {
+        return restricoes;
+    }
 }

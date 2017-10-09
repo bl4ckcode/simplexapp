@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class VarDecisaoAdapter extends ArrayAdapter<VarDecisaoAdapter.MainAdapte
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final MainAdapterViewholder holder;
 
-        if(convertView == null) {
+        if (convertView == null) {
             holder = new MainAdapterViewholder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.adapter_var_decisao, parent, false);
@@ -75,38 +76,22 @@ public class VarDecisaoAdapter extends ArrayAdapter<VarDecisaoAdapter.MainAdapte
             }
         });
 
-        if (position == variaveisDecisao.size() - 1) {
-            holder.imgViewVarDecisao.setImageDrawable(recursos.getDrawable(R.drawable.ic_add_circle_outline, null));
-            holder.imgViewVarDecisao.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    holder.imgViewVarDecisao.setImageDrawable(recursos.getDrawable(R.drawable.ic_highlight_off, null));
-                    holder.imgViewVarDecisao.setTag(position);
-                    holder.imgViewVarDecisao.setOnClickListener(excluirItemListener);
+        holder.imgViewVarDecisao.setImageDrawable(recursos.getDrawable(R.drawable.ic_add_circle_outline, null));
+        holder.imgViewVarDecisao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.imgViewVarDecisao.setVisibility(View.INVISIBLE);
+                holder.imgViewVarDecisao.setTag(position);
 
-                    VariavelDecisao novaVariavel = new VariavelDecisao(0.0, variaveisDecisao.get(position).getProximaVariavel());
-                    variaveisDecisao.add(novaVariavel);
+                VariavelDecisao novaVariavel = new VariavelDecisao(0.0, variaveisDecisao.get(position).getProximaVariavel());
+                variaveisDecisao.add(novaVariavel);
 
-                    notifyDataSetChanged();
-                }
-            });
-        } else {
-            holder.imgViewVarDecisao.setImageDrawable(recursos.getDrawable(R.drawable.ic_highlight_off, null));
-            holder.imgViewVarDecisao.setTag(position);
-            holder.imgViewVarDecisao.setOnClickListener(excluirItemListener);
-        }
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }
-
-    private View.OnClickListener excluirItemListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            int pos = (int) view.getTag();
-            variaveisDecisao.remove(pos);
-            notifyDataSetChanged();
-        }
-    };
 
     @Override
     public int getCount() {

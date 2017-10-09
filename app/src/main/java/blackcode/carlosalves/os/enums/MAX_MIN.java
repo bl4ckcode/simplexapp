@@ -5,16 +5,22 @@ package blackcode.carlosalves.os.enums;
  */
 
 public enum MAX_MIN {
-    MAX(0), MIN(1);
+    MAX(0, "MAX"), MIN(1, "MIN");
 
     private int id;
+    private String max_min;
 
-    MAX_MIN(int id) {
+    MAX_MIN(int id, String max_min) {
         this.id = id;
+        this.max_min = max_min;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getMax_min() {
+        return this.max_min;
     }
 
     public static MAX_MIN valueOf(int id) {
