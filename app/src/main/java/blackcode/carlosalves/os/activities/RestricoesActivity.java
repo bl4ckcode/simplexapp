@@ -14,8 +14,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -65,43 +70,49 @@ public class RestricoesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    File file = new File("input.txt");
-                    FileWriter fileWriter = new FileWriter(file);
-
-                    String decisao = "";
-                    for(VariavelDecisao variavelDecisao : listaVarDecisao) {
-                        decisao += variavelDecisao.getValor() + " ";
-                    }
-
                     restricoes = restricoesAdapter.getRestricoes();
-                    fileWriter.write(max_min.getMax_min() + " " + decisao);
-
-                    for(Restricao restricao : restricoes) {
-                        String line = "";
-                        for(Double valor : restricao.getVariaveis()) {
-                            line += valor;
-                        }
-                        line += " " + SINAL.valueOf(restricao.getSinal()).getSinal() + " " + restricao.getDemanda();
-                        fileWriter.append(line).append("\n");
-                    }
 
                     RequestQueue queue = Volley.newRequestQueue(RestricoesActivity.this);
-                    String url = "http://www.google.com";
+                    String url = "https://pls69.herokuapp.com/submit";
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                            new Response.Listener<String>() {
+                    JSONObject jsonObject = new JSONObject();
+
+                    JSONObject jsonObjectMaxMin = new JSONObject();
+                    jsonObjectMaxMin.put("'max/min'", max_min.getMax_min());
+
+                    JSONArray jsonArrayZ = new JSONArray();
+                    for (VariavelDecisao variavelDecisao : listaVarDecisao) {
+                        jsonArrayZ.put(variavelDecisao.getValor());
+                    }
+
+                    jsonObjectMaxMin.put("'Z'", jsonArrayZ);
+                    jsonObjectMaxMin.put("'rests", restricoes.size() - 1);
+
+                    for (Restricao restricao : restricoes) {
+                        JSONArray jsonArray = new JSONArray();
+                        for (Double valor : restricao.getVariaveis()) {
+                            jsonArray.put(valor);
+                        }
+                        jsonArray.put(SINAL.valueOf(restricao.getSinal()).getSinal());
+                        jsonArray.put(restricao.getDemanda());
+                        jsonObjectMaxMin.put("'R" + restricao.getIdVarivel() + "'", jsonArray);
+                    }
+
+                    JsonObjectRequest stringRequest = new JsonObjectRequest(url, jsonObject,
+                            new Response.Listener<JSONObject>() {
                                 @Override
-                                public void onResponse(String response) {
+                                public void onResponse(JSONObject response) {
                                     System.out.println("LOL");
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
+                                    System.out.println("LOL");
                                 }
                             });
                     queue.add(stringRequest);
-                } catch (IOException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
