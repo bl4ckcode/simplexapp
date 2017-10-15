@@ -1,6 +1,6 @@
 # simplexapp
 
-Para usar o app basta realizar o download do app-simplex.apk e colocar em um celular Android, em uma pasta de arquivos que seja de fácil acesso,
+Para usar o app basta realizar o download do app-simplex.apk e colocar em um celular Android, em uma pasta de arquivos que seja de fácil acesso. Em seguida, vá no seu celular Android e acesse a pasta de arquivos que você colocou o .apk,
 após isso basta clicar no .apk e o Android se encarregara da instalação.
 
 # Códigos fonte Android
