@@ -1,19 +1,25 @@
 package blackcode.carlosalves.os.activities;
 
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -25,6 +31,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import blackcode.carlosalves.os.R;
@@ -57,7 +64,7 @@ public class RestricoesActivity extends AppCompatActivity {
         assert listaVarDecisao != null;
 
         int tamanho = listaVarDecisao.size();
-        restricoes.add(new Restricao(0, tamanho, SINAL.MAIOR_IGUAL.getId(), 0.0));
+        restricoes.add(new Restricao(0, tamanho, SINAL.MAIOR_IGUAL.getId(), "0.0"));
 
         RecyclerView recViewRestricoes = (RecyclerView) findViewById(R.id.recView_restricoes);
         LinearLayoutManager linearManager = new LinearLayoutManager(this);
@@ -75,42 +82,75 @@ public class RestricoesActivity extends AppCompatActivity {
                     RequestQueue queue = Volley.newRequestQueue(RestricoesActivity.this);
                     String url = "https://pls69.herokuapp.com/submit";
 
-                    JSONObject jsonObject = new JSONObject();
-
                     JSONObject jsonObjectMaxMin = new JSONObject();
-                    jsonObjectMaxMin.put("'max/min'", max_min.getMax_min());
+                    jsonObjectMaxMin.put("maxmin", max_min.getMax_min());
 
                     JSONArray jsonArrayZ = new JSONArray();
                     for (VariavelDecisao variavelDecisao : listaVarDecisao) {
-                        jsonArrayZ.put(variavelDecisao.getValor());
+                        jsonArrayZ.put(variavelDecisao.getValor() + "");
                     }
 
-                    jsonObjectMaxMin.put("'Z'", jsonArrayZ);
-                    jsonObjectMaxMin.put("'rests", restricoes.size() - 1);
+                    jsonObjectMaxMin.put("Z", jsonArrayZ);
+                    jsonObjectMaxMin.put("rests", restricoes.size() + "");
 
                     for (Restricao restricao : restricoes) {
                         JSONArray jsonArray = new JSONArray();
                         for (Double valor : restricao.getVariaveis()) {
-                            jsonArray.put(valor);
+                            jsonArray.put(valor + "");
                         }
                         jsonArray.put(SINAL.valueOf(restricao.getSinal()).getSinal());
-                        jsonArray.put(restricao.getDemanda());
-                        jsonObjectMaxMin.put("'R" + restricao.getIdVarivel() + "'", jsonArray);
+                        jsonArray.put(Double.parseDouble(restricao.getDemanda()) + "");
+                        jsonObjectMaxMin.put("R" + restricao.getIdVarivel(), jsonArray);
                     }
 
-                    JsonObjectRequest stringRequest = new JsonObjectRequest(url, jsonObject,
-                            new Response.Listener<JSONObject>() {
+                    final String transform = jsonObjectMaxMin.toString().replaceAll("\"", "'");
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
                                 @Override
-                                public void onResponse(JSONObject response) {
-                                    System.out.println("LOL");
+                                public void onResponse(String response) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(RestricoesActivity.this);
+                                    builder.setTitle("Resposta");
+                                    builder.setMessage(response);
+                                    builder.setPositiveButton("OK", null);
+                                    builder.create().show();
                                 }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    System.out.println("LOL");
-                                }
-                            });
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("VOLLEY", error.toString());
+                        }
+                    }) {
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
+                        }
+
+                        @Override
+                        public byte[] getBody() throws AuthFailureError {
+                            try {
+                                return transform == null ? null : transform.getBytes("utf-8");
+                            } catch (UnsupportedEncodingException uee) {
+                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s",
+                                        transform, "utf-8");
+                                return null;
+                            }
+                        }
+
+                        @Override
+                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                            String parsed;
+
+                            try {
+                                parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                            } catch (UnsupportedEncodingException e) {
+                                parsed = new String(response.data);
+                            }
+
+                            return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
+                        }
+                    };
+
                     queue.add(stringRequest);
                 } catch (JSONException e) {
                     e.printStackTrace();

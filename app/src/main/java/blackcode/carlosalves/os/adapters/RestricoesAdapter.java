@@ -3,11 +3,14 @@ package blackcode.carlosalves.os.adapters;
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -38,6 +41,8 @@ public class RestricoesAdapter extends RecyclerView.Adapter<RestricoesAdapter.Re
         ImageView imViewRestricao;
         RecyclerView recViewVariaveis;
         RadioGroup radioGroupDemanda;
+        RadioButton rg1;
+        RadioButton rg2;
         EditText edtTxtDemanda;
 
         RestricoesViewholder(View itemView) {
@@ -48,6 +53,8 @@ public class RestricoesAdapter extends RecyclerView.Adapter<RestricoesAdapter.Re
             recViewVariaveis = itemView.findViewById(R.id.listView_variaveis_restricao);
             radioGroupDemanda = itemView.findViewById(R.id.radioGroup_demanda);
             edtTxtDemanda = itemView.findViewById(R.id.edtTxt_demanda);
+            rg1 = itemView.findViewById(R.id.rg1);
+            rg2 = itemView.findViewById(R.id.rg2);
         }
     }
 
@@ -69,30 +76,42 @@ public class RestricoesAdapter extends RecyclerView.Adapter<RestricoesAdapter.Re
             @Override
             public void onClick(View view) {
                 holder.imViewRestricao.setVisibility(View.INVISIBLE);
-                restricoes.add(new Restricao(restricao.getProximaVariavel(), size, SINAL.MAIOR_IGUAL.getId(), 0.0));
+                restricoes.add(new Restricao(restricao.getProximaVariavel(), size, SINAL.MAIOR_IGUAL.getId(), "0.0"));
                 notifyItemInserted(restricoes.size() - 1);
             }
         });
 
-        holder.edtTxtDemanda.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        holder.rg1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {
-                String number = holder.edtTxtDemanda.getText().toString();
+            public void onClick(View view) {
+                Restricao rest = restricoes.get(holder.getAdapterPosition());
+                rest.setSinal(SINAL.MENOR_IGUAL.getId());
+            }
+        });
 
-                if (!number.equals("")) {
-                    double valor = Double.parseDouble(number);
-                    int value = holder.radioGroupDemanda.getCheckedRadioButtonId();
-                    Restricao rest = restricoes.get(holder.getAdapterPosition());
+        holder.rg2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Restricao rest = restricoes.get(holder.getAdapterPosition());
+                rest.setSinal(SINAL.MAIOR_IGUAL.getId());
+            }
+        });
 
-                    rest.setDemanda(valor);
+        holder.edtTxtDemanda.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                    if (value == -1)
-                        holder.radioGroupDemanda.check(rest.getSinal());
-                    else
-                        rest.setSinal(SINAL.valueOf(holder.radioGroupDemanda.getCheckedRadioButtonId()).getId());
+            }
 
-                    holder.edtTxtDemanda.setText("" + valor);
-                }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Restricao rest = restricoes.get(holder.getAdapterPosition());
+                rest.setDemanda(editable.toString());
             }
         });
     }

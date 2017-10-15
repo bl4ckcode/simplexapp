@@ -13,9 +13,9 @@ public class Restricao implements Parcelable {
     private int idVarivel;
     private int sinal;
     private ArrayList<Double> variaveis = new ArrayList<>();
-    private Double demanda;
+    private String demanda;
 
-    public Restricao(int idVarivel, int size, int sinal, Double demanda) {
+    public Restricao(int idVarivel, int size, int sinal, String demanda) {
         this.idVarivel = idVarivel;
         this.sinal = sinal;
         this.demanda = demanda;
@@ -65,7 +65,7 @@ public class Restricao implements Parcelable {
         return sinal;
     }
 
-    public Double getDemanda() {
+    public String getDemanda() {
         return demanda;
     }
 
@@ -81,7 +81,7 @@ public class Restricao implements Parcelable {
         this.sinal = sinal;
     }
 
-    public void setDemanda(Double demanda) {
+    public void setDemanda(String demanda) {
         this.demanda = demanda;
     }
 

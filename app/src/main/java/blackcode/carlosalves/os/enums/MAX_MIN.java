@@ -5,7 +5,7 @@ package blackcode.carlosalves.os.enums;
  */
 
 public enum MAX_MIN {
-    MAX(0, "MAX"), MIN(1, "MIN");
+    MAX(1, "MAX"), MIN(2, "MIN");
 
     private int id;
     private String max_min;

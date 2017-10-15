@@ -5,7 +5,7 @@ package blackcode.carlosalves.os.enums;
  */
 
 public enum SINAL {
-    MENOR_IGUAL(0, "<="), MAIOR_IGUAL(1, ">=");
+    MENOR_IGUAL(1, "<="), MAIOR_IGUAL(2, ">=");
 
     private int id;
     private String sinal;
